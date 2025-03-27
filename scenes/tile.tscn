@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://j7qqn4k56mji"]
+
+[ext_resource type="Script" uid="uid://dj4cmh1mm37gg" path="res://scripts/Tile.cs" id="1_mccdq"]
+[ext_resource type="Shader" uid="uid://cgqd8j2lfah00" path="res://materials/hover_shader.gdshader" id="2_hbxoi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r6qn8"]
+render_priority = 0
+shader = ExtResource("2_hbxoi")
+
+[sub_resource type="BoxMesh" id="BoxMesh_jymvt"]
+material = SubResource("ShaderMaterial_r6qn8")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_18vge"]
+
+[node name="Tile" type="StaticBody3D"]
+script = ExtResource("1_mccdq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.2, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_jymvt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.2, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_18vge")
+
+[connection signal="input_event" from="." to="." method="OnTileSelected"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
