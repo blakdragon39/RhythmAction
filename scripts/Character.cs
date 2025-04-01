@@ -3,7 +3,7 @@ using RhythmAction.scripts;
 using System.Collections.Generic;
 using Vector3 = Godot.Vector3;
 
-public partial class Character : StaticBody3D {
+public partial class Character : StaticBody3D, IBeatable {
 
     [Export] private Tile startTile;
 
@@ -23,6 +23,7 @@ public partial class Character : StaticBody3D {
     private float tickProgress;
     
     public override void _Ready() {
+        GetNode<BeatTimer>("/root/BeatTimer").Beatables.Add(this);
         Position = new Vector3(startTile.Position.X, Position.Y, startTile.Position.Z); // todo y position will eventually come from Tile too?
 
         body = GetNode<Node3D>("Body");
@@ -72,5 +73,9 @@ public partial class Character : StaticBody3D {
             
             body.Rotation = body.Rotation.Slerp(new Vector3(body.RotationDegrees.X, newRotation, body.RotationDegrees.Z), 0.3f);
         }
+    }
+
+    public void OnBeat() {
+        GD.Print("do actions!");
     }
 }
